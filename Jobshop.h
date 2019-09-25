@@ -14,14 +14,22 @@ class JobShop {
 public:
 	JobShop(std::vector<int> jobs);
 	void makeJobList(std::vector<int> jobs);
-	void makePartsJobList(std::vector<int> parts);
+	void makePartsJobList(int nMachines, std::vector<int> & parts);
 	virtual ~JobShop();
+
+	const std::vector<Job>& getJobList() const {
+		return jobList;
+	}
+
+	int getJobs() const;
+	int getMachines() const;
 
 private:
 	int nJobs;
 	int nMachines;
 	std::vector<Job> jobList;
-	std::vector<int> testList {1,2,45,54,3,2,4,3,5,3,4,23,21};
+	std::vector<int>partList;
+//	std::vector<int> testList {1,2,45,54,3,2,4,3,5,3,4,23,21,2};
 };
 
 #endif /* SCHEDULING_JOBSHOP_H_ */

@@ -10,10 +10,10 @@
 #include <iostream>
 
 Task::Task(int aDuration, int aMachine)
-:duration(aDuration), machine(aMachine)
+:duration(aDuration), machine(aMachine) // initialize duration and machine
 {
 
-	std::cout << duration << " " << machine << std::endl;
+	std::cout << "Duration: " <<duration << " Machine: " << machine << std::endl;
 
 }
 

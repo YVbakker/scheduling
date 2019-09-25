@@ -14,26 +14,47 @@
 int main(int argc, char **argv) {
 
 	std::vector<int>   waardes;
-//	waardes.push_back(1);
-//	waardes.push_back(4);
-//
-//	waardes.push_back(2);
-//	waardes.push_back(1);
-//
-//	waardes.push_back(3);
-//	waardes.push_back(4);
-//
-//	waardes.push_back(17);
-//	waardes.push_back(9);
-////	Task t1(waardes);
+	waardes.push_back(3); // jobs
+	waardes.push_back(3); // machines
 
-//	Job j1(waardes);
+	waardes.push_back(4); // duration
+	waardes.push_back(10); // machine
+
+	waardes.push_back(4); // duration
+	waardes.push_back(10); // machine
+
+	waardes.push_back(4); // duration
+	waardes.push_back(10); // machine
+
+	waardes.push_back(4); // duration
+	waardes.push_back(10); // machine
+
+	waardes.push_back(4); // duration
+	waardes.push_back(10); // machine
+
+	waardes.push_back(4); // duration
+	waardes.push_back(10); // machine
+
+	waardes.push_back(4); // duration
+	waardes.push_back(10); // machine
+
+	waardes.push_back(4); // duration
+	waardes.push_back(10); // machine
+
+	waardes.push_back(4); // duration
+	waardes.push_back(10); // machine
 
 	JobShop js1(waardes);
 
-//	std::vector<Task> x = j1.getTaskList();
+	std::cout << "--------------------------" << std::endl;
+//	std::cout << js1.getJobs() << std::endl;
+//	std::cout << js1.getMachines() << std::endl;
 
-//	std::cout << x.at(1).getDuration() << " " << x.at(1).getMachine() << std::endl;
+	std::vector<Job> x = js1.getJobList();
+
+	std::cout << x.at(0).getTotalTime() << std::endl; 	// output totale tijd job 1
+	std::cout << x.at(1).getTotalTime() << std::endl;	// output totale tijd job 2
+	std::cout << x.at(2).getTotalTime() << std::endl;	// output totale tijd job 3
 
 
 

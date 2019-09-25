@@ -15,9 +15,18 @@ class Job {
 public:
 	Job(std::vector<int> tasks);
 	void makeTaskList(int nTasks, std::vector<int> tasks);
+	int berekenTotaleTijd(int nTasks);
 
 	virtual ~Job();
 	const std::vector<Task>& getTaskList() const;
+
+	int getTasks() const {
+		return nTasks;
+	}
+
+	int getTotalTime() const {
+		return totalTime;
+	}
 
 private:
 	int nTasks;
