@@ -7,12 +7,14 @@
  */
 
 #include "Task.h"
+#include <iostream>
 
-Task::Task(unsigned char order, unsigned char duration, unsigned char machine)
+Task::Task(int aDuration, int aMachine)
+:duration(aDuration), machine(aMachine)
 {
-	this->order = order;
-	this->duration = duration;
-	this->machine = machine;
+
+	std::cout << duration << " " << machine << std::endl;
+
 }
 
 Task::~Task()
@@ -20,17 +22,12 @@ Task::~Task()
 
 }
 
-unsigned char Task::getDuration()
+unsigned int Task::getDuration()
 {
 	return duration;
 }
 
-unsigned char Task::getOrder()
-{
-	return order;
-}
-
-unsigned char Task::getMachine()
+unsigned int Task::getMachine()
 {
 	return machine;
 }

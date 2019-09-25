@@ -1,28 +1,27 @@
 /*
- * Jobshop.h
+ * JobShop.h
  *
- *  Created on: 24 Sep 2019
- *      Author: yvbakker
+ *  Created on: 25 sep. 2019
+ *      Author: jelle
  */
 
-#ifndef JOBSHOP_H_
-#define JOBSHOP_H_
+#ifndef SCHEDULING_JOBSHOP_H_
+#define SCHEDULING_JOBSHOP_H_
 
-#include <fstream>
-#include <iostream>
-#include "Job.h"
+#include "job.h"
 
-class Jobshop
-{
+class JobShop {
 public:
-	Jobshop();
-	bool import(std::ifstream configFile);
-	void calculate();
-	virtual ~Jobshop();
+	JobShop(std::vector<int> jobs);
+	void makeJobList(std::vector<int> jobs);
+	void makePartsJobList(std::vector<int> parts);
+	virtual ~JobShop();
+
 private:
-	Job* jobs[];
+	int nJobs;
+	int nMachines;
+	std::vector<Job> jobList;
+	std::vector<int> testList {1,2,45,54,3,2,4,3,5,3,4,23,21};
 };
 
-
-
-#endif /* JOBSHOP_H_ */
+#endif /* SCHEDULING_JOBSHOP_H_ */

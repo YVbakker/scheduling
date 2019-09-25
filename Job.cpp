@@ -1,34 +1,28 @@
 /*
  * Job.cpp
  *
- *  Created on: 24 Sep 2019
- *      Author: yvbakker
+ *  Created on: 25 sep. 2019
+ *      Author: jelle
  */
 
 #include "Job.h"
 
-Job::Job(unsigned char nTasks, unsigned char jobId)
-{
-	this->jobId = jobId;
-	this->tasks = tasks[nTasks];
-	this->duration = getTotalDuration();
+Job::Job(std::vector<int> tasks)
+:nTasks(tasks.size()), totalTime(0)
+ {
+	makeTaskList(nTasks, tasks);
 }
 
-unsigned char Job::getTotalDuration()
-{
-	unsigned char totalDuration = 0;
-	for(Task t : tasks)
-	{
-		totalDuration += t.getDuration();
-	}
-	return totalDuration;
+void Job::makeTaskList(int nTasks, std::vector<int> tasks) {
+for (int i = 0; i < nTasks; i+=2){
+taskList.push_back(Task(tasks.at(i), tasks.at(i+1)));
+}
 }
 
-Job::~Job()
-{
-	for(Task t : tasks)
-		delete t;
+Job::~Job() {
+	// TODO Auto-generated destructor stub
 }
 
-
-
+const std::vector<Task>& Job::getTaskList() const {
+	return taskList;
+}
