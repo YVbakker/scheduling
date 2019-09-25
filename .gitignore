@@ -31,3 +31,8 @@
 *.out
 *.app
 /Debug/
+
+#eclipse
+/.settings/
+*.cproject
+*.project
