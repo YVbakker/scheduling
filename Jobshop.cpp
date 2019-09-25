@@ -6,6 +6,7 @@
  */
 
 #include "JobShop.h"
+#include <algorithm>
 
 JobShop::JobShop(std::vector<int> jobs)
 :nJobs(0), nMachines(0) // initialize number of jobs and number of machines
@@ -46,6 +47,27 @@ JobShop::~JobShop() {
 
 int JobShop::getJobs() const {
 	return nJobs;
+}
+
+void JobShop::run() {
+	std::vector<Job> x = jobList;
+
+	for(long long unsigned i = 0; i < jobList.size(); ++i){
+		std::cout << "Job " << i << " has a total time of: " << x.at(i).getTotalTime() << std::endl; 	// output totale tijd job i
+	}
+}
+
+int JobShop::getCriticalPath() {
+	int criticalTime = 0;
+	std::vector<Job> x = jobList;
+	for (long long unsigned i = 0; i < jobList.size(); ++i){
+	if(x.at(i).getTotalTime() > criticalTime){
+		criticalTime = x.at(i).getTotalTime();
+	}
+	}
+	std::cout << "The critical path has a total time of : " << criticalTime << std::endl; 	// output totale tijd van critical path
+
+return criticalTime;
 }
 
 int JobShop::getMachines() const {

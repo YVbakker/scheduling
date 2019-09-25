@@ -15,6 +15,8 @@ public:
 	JobShop(std::vector<int> jobs);
 	void makeJobList(std::vector<int> jobs);
 	void makePartsJobList(int nMachines, std::vector<int> & parts);
+	int getCriticalPath();
+	void run();
 	virtual ~JobShop();
 
 	const std::vector<Job>& getJobList() const {
