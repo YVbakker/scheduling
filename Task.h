@@ -8,18 +8,19 @@
 #ifndef TASK_H_
 #define TASK_H_
 
+#include <iostream>
+#include <vector>
+
 class Task
 {
 public:
-	Task(unsigned char order, unsigned char duration, unsigned char machine);
+	Task(int aDuration, int aMachine);
 	virtual ~Task();
-	unsigned char getDuration();
-	unsigned char getOrder();
-	unsigned char getMachine();
+	unsigned int getDuration();
+	unsigned int getMachine();
 private:
-	unsigned char duration;
-	unsigned char order;
-	unsigned char machine;
+	unsigned int duration;
+	unsigned int machine;
 };
 
 

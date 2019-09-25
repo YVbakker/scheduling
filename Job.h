@@ -1,27 +1,28 @@
 /*
  * Job.h
  *
- *  Created on: 24 Sep 2019
- *      Author: yvbakker
+ *  Created on: 25 sep. 2019
+ *      Author: jelle
  */
 
-#ifndef JOB_H_
-#define JOB_H_
+#ifndef SCHEDULING_JOB_H_
+#define SCHEDULING_JOB_H_
 
 #include "Task.h"
+#include <list>
 
-class Job
-{
+class Job {
 public:
-	Job(unsigned char nTasks, unsigned char jobId);
-	unsigned char getTotalDuration();
+	Job(std::vector<int> tasks);
+	void makeTaskList(int nTasks, std::vector<int> tasks);
+
 	virtual ~Job();
+	const std::vector<Task>& getTaskList() const;
+
 private:
-	Task* tasks[];
-	unsigned char jobId;
-	unsigned char duration = 0;
+	int nTasks;
+	int totalTime;
+	std::vector<Task> taskList;
 };
 
-
-
-#endif /* JOB_H_ */
+#endif /* SCHEDULING_JOB_H_ */
