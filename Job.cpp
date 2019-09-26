@@ -7,22 +7,54 @@
 
 #include "Job.h"
 
-Job::Job(std::vector<int> tasks)
-:nTasks(tasks.size()), totalTime(0)
- {
-	makeTaskList(nTasks, tasks);
+Job::Job()
+{
+	remainingComputationTime = getDuration();
 }
 
-void Job::makeTaskList(int nTasks, std::vector<int> tasks) {
-for (int i = 0; i < nTasks; i+=2){
-taskList.push_back(Task(tasks.at(i), tasks.at(i+1)));
-}
-}
-
-Job::~Job() {
-	// TODO Auto-generated destructor stub
+void Job::addTask(unsigned char thread, unsigned char duration)
+{
+	tasks.push_back(Task(thread,duration));
 }
 
-const std::vector<Task>& Job::getTaskList() const {
-	return taskList;
+void Job::deleteCompletedTask()
+{
+	tasks.pop_front();
+}
+
+Task Job::getNextTask()
+{
+	return tasks.front();
+}
+
+Job::~Job()
+{
+}
+
+unsigned char Job::getDuration()
+{
+	unsigned char duration = 0;
+	for (Task t : tasks)
+	{
+		duration += t.getDuration();
+	}
+	return duration;
+}
+
+Job::Job(const Job &aJob)
+{
+	remainingComputationTime = aJob.remainingComputationTime;
+	tasks = aJob.tasks;
+}
+
+Job Job::operator =(const Job &aJob)
+{
+	remainingComputationTime = aJob.remainingComputationTime;
+	tasks = aJob.tasks;
+	return *this;
+}
+
+bool Job::operator >(const Job &aJob)
+{
+	return remainingComputationTime > aJob.remainingComputationTime;
 }

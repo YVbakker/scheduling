@@ -5,35 +5,34 @@
  *      Author: jelle
  */
 
-#include "JobShop.h"
+#include "Jobshop.h"
+#include <algorithm>
 
-JobShop::JobShop(std::vector<int> jobs)
-:nJobs(0), nMachines(0)
+JobShop::JobShop(std::string input)
 {
-	// TODO Auto-generated constructor stub
 
-	makeJobList(jobs);
 }
 
-void JobShop::makeJobList(std::vector<int> jobs) {
-	nJobs = jobs.at(0);
-	jobs.erase(jobs.begin());
-	nMachines = jobs.at(0);
-	jobs.erase(jobs.begin());
+void JobShop::addJob()
+{
+	jobs.push_back(Job());
+}
 
-	for (int i = 0; i < nJobs; i+=2){
-	jobList.push_back(Job(testList));
+JobShop::~JobShop()
+{
+
+}
+
+std::string JobShop::calc()
+{
+	unsigned short executionTime = 0;
+	while(jobs.size() != 0)
+	{
+		for(Job j : jobs)
+		{
+
+		}
+		executionTime++;
 	}
-
+	return ""; //return string in ABNF format
 }
-
-void JobShop::makePartsJobList(std::vector<int> parts) {
-	for (int i = 0; i < nJobs; i+=2){
-
-	}
-}
-
-JobShop::~JobShop() {
-	// TODO Auto-generated destructor stub
-}
-

@@ -32,4 +32,15 @@ unsigned int Task::getMachine()
 	return machine;
 }
 
+Task::Task(const Task &aTask)
+{
+	duration = aTask.duration;
+	machine = aTask.machine;
+}
 
+Task Task::operator =(const Task &aTask)
+{
+	duration = aTask.duration;
+	machine = aTask.machine;
+	return *this;
+}

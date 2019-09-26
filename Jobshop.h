@@ -8,20 +8,23 @@
 #ifndef SCHEDULING_JOBSHOP_H_
 #define SCHEDULING_JOBSHOP_H_
 
-#include "job.h"
+#include "Job.h"
+#include "Thread.h"
+#include <vector>
+#include <map>
+#include <string>
 
 class JobShop {
 public:
-	JobShop(std::vector<int> jobs);
-	void makeJobList(std::vector<int> jobs);
-	void makePartsJobList(std::vector<int> parts);
+	JobShop(std::string input); //input string in ABNF format
+	void addJob();
+	void deleteJob(unsigned char index);
+	std::string calc();
 	virtual ~JobShop();
 
 private:
-	int nJobs;
-	int nMachines;
-	std::vector<Job> jobList;
-	std::vector<int> testList {1,2,45,54,3,2,4,3,5,3,4,23,21};
+	std::vector<Job> jobs;
+	std::vector<Thread> threads;
 };
 
 #endif /* SCHEDULING_JOBSHOP_H_ */

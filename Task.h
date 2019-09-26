@@ -9,12 +9,13 @@
 #define TASK_H_
 
 #include <iostream>
-#include <vector>
 
 class Task
 {
 public:
 	Task(int aDuration, int aMachine);
+	Task(const Task& aTask);
+	Task operator=(const Task& aTask);
 	virtual ~Task();
 	unsigned int getDuration();
 	unsigned int getMachine();
