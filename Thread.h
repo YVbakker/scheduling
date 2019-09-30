@@ -13,6 +13,10 @@ class Thread
 public:
 	Thread();
 	virtual ~Thread();
+	unsigned char getRemainingExecutionTime();
+	void setRemainingExecutionTime(unsigned char t);
+private:
+	unsigned char remainingExecutionTime;
 };
 
 #endif /* THREAD_H_ */

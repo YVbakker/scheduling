@@ -9,10 +9,20 @@
 
 Thread::Thread()
 {
-
+	remainingExecutionTime = 0;
 }
 
 Thread::~Thread()
 {
 
+}
+
+unsigned char Thread::getRemainingExecutionTime()
+{
+	return remainingExecutionTime;
+}
+
+void Thread::setRemainingExecutionTime() :
+		remainingExecutionTime(remainingExecutionTime)
+{
 }

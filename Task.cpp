@@ -12,9 +12,7 @@
 Task::Task(int aDuration, int aMachine)
 :duration(aDuration), machine(aMachine)
 {
-
-	std::cout << duration << " " << machine << std::endl;
-
+	std::cout<<"Task added: "<<duration<<" "<<machine<<std::endl;
 }
 
 Task::~Task()

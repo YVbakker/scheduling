@@ -9,12 +9,12 @@
 
 Job::Job()
 {
-	remainingComputationTime = getDuration();
+	remainingTime = deadline = getDuration();
 }
 
 void Job::addTask(unsigned char thread, unsigned char duration)
 {
-	tasks.push_back(Task(thread,duration));
+	tasks.push_back(Task(thread, duration));
 }
 
 void Job::deleteCompletedTask()
@@ -27,8 +27,19 @@ Task Job::getNextTask()
 	return tasks.front();
 }
 
+unsigned char Job::slack(unsigned short cTime)
+{
+	return deadline - cTime - remainingTime;
+}
+
 Job::~Job()
 {
+
+}
+
+int Job::size()
+{
+	return tasks.size();
 }
 
 unsigned char Job::getDuration()
@@ -43,18 +54,20 @@ unsigned char Job::getDuration()
 
 Job::Job(const Job &aJob)
 {
-	remainingComputationTime = aJob.remainingComputationTime;
+	remainingTime = aJob.remainingTime;
+	deadline = aJob.deadline;
 	tasks = aJob.tasks;
 }
 
-Job Job::operator =(const Job &aJob)
+Job Job::operator=(const Job &aJob)
 {
-	remainingComputationTime = aJob.remainingComputationTime;
+	remainingTime = aJob.remainingTime;
 	tasks = aJob.tasks;
+	deadline = aJob.deadline;
 	return *this;
 }
 
-bool Job::operator >(const Job &aJob)
+bool Job::operator>(Job &aJob)
 {
-	return remainingComputationTime > aJob.remainingComputationTime;
+	return remainingTime > aJob.remainingTime;
 }

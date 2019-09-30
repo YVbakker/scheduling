@@ -10,7 +10,7 @@
 
 #include "Job.h"
 #include "Thread.h"
-#include <vector>
+#include <deque>
 #include <map>
 #include <string>
 
@@ -23,8 +23,8 @@ public:
 	virtual ~JobShop();
 
 private:
-	std::vector<Job> jobs;
-	std::vector<Thread> threads;
+	std::deque<Job> jobs;
+	std::deque<Thread> threads;
 };
 
 #endif /* SCHEDULING_JOBSHOP_H_ */
