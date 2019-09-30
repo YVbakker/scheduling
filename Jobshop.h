@@ -12,11 +12,13 @@
 
 class JobShop {
 public:
-	JobShop(std::vector<int> jobs);
+	JobShop(std::string aTestFile);
 	void makeJobList(std::vector<int> jobs);
 	void makePartsJobList(int nMachines, std::vector<int> & parts);
 	int getCriticalPath();
 	void run();
+//	std::string makeFileToString(std::ifstream& aFile);
+	void makeStringToArrayList(std::string aFile);
 	virtual ~JobShop();
 
 	const std::vector<Job>& getJobList() const {
@@ -29,6 +31,7 @@ public:
 private:
 	int nJobs;
 	int nMachines;
+	std::vector<int> allNumbersToList;
 	std::vector<Job> jobList;
 	std::vector<int>partList;
 //	std::vector<int> testList {1,2,45,54,3,2,4,3,5,3,4,23,21,2};

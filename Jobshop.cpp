@@ -6,14 +6,24 @@
  */
 
 #include "JobShop.h"
+#include <regex>
 #include <algorithm>
 
-JobShop::JobShop(std::vector<int> jobs)
+JobShop::JobShop(std::string aFile)
 :nJobs(0), nMachines(0) // initialize number of jobs and number of machines
 {
-	// TODO Auto-generated constructor stub
+makeStringToArrayList(aFile);
+makeJobList(allNumbersToList); // Makes a list of jobs
+}
 
-	makeJobList(jobs); // Makes a list of jobs
+void JobShop::makeStringToArrayList(std::string aFile){
+    std::smatch m;
+    std::regex r("[0-9]+");
+	  while (std::regex_search(aFile, m, r)){
+		  allNumbersToList.push_back(stoi(m.str(0)));
+		        aFile = m.suffix().str();
+
+	  }
 }
 
 void JobShop::makeJobList(std::vector<int> jobs) {
@@ -50,6 +60,8 @@ int JobShop::getJobs() const {
 }
 
 void JobShop::run() {
+
+	getCriticalPath();
 	std::vector<Job> x = jobList;
 
 	for(long long unsigned i = 0; i < jobList.size(); ++i){
