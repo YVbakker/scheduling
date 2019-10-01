@@ -1,30 +1,36 @@
 /*
  * JobShop.h
  *
- *  Created on: 25 sep. 2019
+ *  Created on: 30 sep. 2019
  *      Author: jelle
  */
 
-#ifndef SCHEDULING_JOBSHOP_H_
-#define SCHEDULING_JOBSHOP_H_
+#ifndef JOBSHOP_H_
+#define JOBSHOP_H_
 
 #include "Job.h"
-#include "Thread.h"
-#include <deque>
-#include <map>
-#include <string>
 
 class JobShop {
 public:
-	JobShop(std::string input); //input string in ABNF format
-	void addJob();
-	void deleteJob(unsigned char index);
-	std::string calc();
+	JobShop();
 	virtual ~JobShop();
+	void addJob();
+	void giveJobTasks(std::vector<int> aTasksListForJob,
+			unsigned short position);
+	void run();
+	int getCriticalPath();
+	bool checkIfMachineIsReadyToRun(unsigned short aMachine);
+	bool compareSlackWithOtherJobWithSameMachine(unsigned short aMachine, unsigned short aCurrentSlack);
+//	bool checkIfMachineWhoWantToRunHasToLowestSlack(unsigned short machine, unsigned short jobPosition);
 
 private:
-	std::deque<Job> jobs;
-	std::deque<Thread> threads;
+	std::vector<Job> joblist;
+	std::vector<int> tasksListForJob;
+	std::vector<int> tasksListForJob2;
+	std::vector<int> tasksListForJob3;
+	unsigned short nMachines;
+	unsigned short nJobs;
+	unsigned short currentTime;
 };
 
-#endif /* SCHEDULING_JOBSHOP_H_ */
+#endif /* JOBSHOP_H_ */

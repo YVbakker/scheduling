@@ -1,34 +1,39 @@
 /*
  * Job.h
  *
- *  Created on: 25 sep. 2019
+ *  Created on: 30 sep. 2019
  *      Author: jelle
  */
 
-#ifndef SCHEDULING_JOB_H_
-#define SCHEDULING_JOB_H_
+#ifndef JOB_H_
+#define JOB_H_
 
+#include <vector>
 #include "Task.h"
-#include <deque>
 
 class Job {
 public:
 	Job();
-	Job(const Job& aJob); //copy constructor (required for use with Vector)
-	Job operator=(const Job& aJob); //operator= (required for use with Vector)
-	bool operator>(Job& aJob); //operator> (for easy sorting)
-	void addTask(unsigned char thread, unsigned char duration);
-	void deleteCompletedTask();
-	void setDeadline();
-	int size();
-	unsigned char getDuration();
-	Task getNextTask();
-	unsigned char slack(unsigned short cTime);
 	virtual ~Job();
+	unsigned short calculateTotalTime();
+	void addTask(unsigned short aMachine, unsigned short aDuration);
+	unsigned short getStatus() const;
+	void setStatus(unsigned short aStatus);
+	const std::vector<Task>& getTaskList() const;
+	void genereerStartTimeForTask(unsigned short aCurrentTime);
+	void genereerEndTimeForTask(unsigned short aCriticalPath);
+	unsigned short getFirstMachineToRun();
+	unsigned short getBusyMachine();
+	void setFirstFreeTaskToBusy(unsigned short aCurrentTime);
+	void checkIfTaskIsFinished(unsigned short aCurrentTime);
+	unsigned short getDurationOfBusyTask();
+//	unsigned short compareSlackWithOtherJobWithSameMachine(unsigned short aMachine, unsigned short aCurrentSlack);
+	unsigned short getSlackOfFirstJobToRun();
+
+
 private:
-	unsigned char deadline;
-	unsigned short remainingTime;
-	std::deque<Task> tasks; //use deque for better performance delete from front
+	std::vector<Task>taskList;
+	unsigned short status;
 };
 
-#endif /* SCHEDULING_JOB_H_ */
+#endif /* JOB_H_ */

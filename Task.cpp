@@ -1,44 +1,55 @@
-
 /*
  * Task.cpp
  *
- *  Created on: 24 Sep 2019
- *      Author: yvbakker
+ *  Created on: 30 sep. 2019
+ *      Author: jelle
  */
 
 #include "Task.h"
-#include <iostream>
 
-Task::Task(int aDuration, int aMachine)
-:duration(aDuration), machine(aMachine)
+Task::Task(unsigned short aMachine, unsigned short aDuration)
+:machine(aMachine), duration(aDuration), startTime(0), endTime(0), status(0)
 {
-	std::cout<<"Task added: "<<duration<<" "<<machine<<std::endl;
-}
-
-Task::~Task()
-{
+	// TODO Auto-generated constructor stub
 
 }
 
-unsigned int Task::getDuration()
-{
+Task::~Task() {
+	// TODO Auto-generated destructor stub
+}
+
+unsigned short Task::getDuration() const {
 	return duration;
 }
 
-unsigned int Task::getMachine()
-{
+unsigned short Task::getEndTime() const {
+	return endTime;
+}
+
+void Task::setEndTime(unsigned short endTime) {
+	this->endTime = endTime;
+}
+
+unsigned short Task::getMachine() const {
 	return machine;
 }
 
-Task::Task(const Task &aTask)
-{
-	duration = aTask.duration;
-	machine = aTask.machine;
+unsigned short Task::getStartTime() const {
+	return startTime;
 }
 
-Task Task::operator =(const Task &aTask)
-{
-	duration = aTask.duration;
-	machine = aTask.machine;
-	return *this;
+void Task::setStartTime(unsigned short startTime) {
+	this->startTime = startTime;
+}
+
+unsigned short Task::getStatus() const {
+	return status;
+}
+
+void Task::setStatus(unsigned short status) {
+	this->status = status;
+}
+
+int Task::calculateSlack(unsigned short aStartTime, unsigned short aEndTime) {
+	return (aEndTime - aStartTime);
 }
