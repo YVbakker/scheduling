@@ -15,17 +15,10 @@ JobShop::JobShop() {
 //	addJob();
 	tasksListForJob = { 0, 30, 1, 30, 2, 10 };
 	tasksListForJob2 = { 0, 60, 1, 15, 2, 10 };
-//	tasksListForJob3 = { 1, 50, 1, 16, 0, 5 };
+//	tasksListForJob3 = { 1, 50, 2, 16, 0, 5 };
 	giveJobTasks(tasksListForJob, 0);
 	giveJobTasks(tasksListForJob2, 1);
 //	giveJobTasks(tasksListForJob3, 2);
-//
-////joblist.at(0).geefAlleWaardes();
-////joblist.at(1).geefAlleWaardes();
-////joblist.at(2).geefAlleWaardes();
-//
-////std::cout << "Total : "<< joblist.at(0).calculateTotalTime() << std::endl;
-////std::cout << "Total : "<< joblist.at(1).calculateTotalTime() << std::endl;
 }
 
 JobShop::~JobShop() {
@@ -52,10 +45,7 @@ void JobShop::run() {
 	path = getCriticalPath();
 	unsigned short kortsteTijd = 0;
 	currentTime = 0;
-//	while (path > 0){
-	for (unsigned long i = 0; i < 6; ++i) {
-		std::cout << "------------------------------- LOOP " << i
-				<< " -------------------------------------" << std::endl;
+	while (checkIfAllJobsAreDone() == false){
 		if (stap == 0) {
 			std::cout
 					<< "------------------------- Stap 0 --------------------------------"
@@ -148,6 +138,7 @@ void JobShop::run() {
 			path = 0;
 		}
 	}
+	giveOutput();
 }
 
 bool JobShop::compareSlackWithOtherJobWithSameMachine(unsigned short aMachine,
@@ -194,6 +185,22 @@ int JobShop::getCriticalPath(unsigned short durationLastFinishedJob) {
 
 	std::cout << "Het criticalpath is : " << criticalPath << std::endl;
 	return criticalPath;
+}
+
+bool JobShop::checkIfAllJobsAreDone(){
+	for (unsigned long i = 0; i < joblist.size(); ++i){
+		if(joblist.at(i).allTasksAreDone() == false){
+			return false;
+		}
+	}
+	std::cout << "Alle jobs zijn klaar !" << std::endl;
+	return true;
+}
+
+void JobShop::giveOutput (){
+	for (unsigned long i = 0; i < joblist.size(); ++i){
+		std::cout << "Job " << i << " started at " << joblist.at(i).getStartTimeOfJob() << " and finished at " << joblist.at(i).getEndTimeOfJob() << std::endl;
+	}
 }
 
 //

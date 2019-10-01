@@ -29,6 +29,9 @@ public:
 	unsigned short getDurationOfBusyTask(unsigned short aCurrentTime);
 //	unsigned short compareSlackWithOtherJobWithSameMachine(unsigned short aMachine, unsigned short aCurrentSlack);
 	unsigned short getSlackOfFirstJobToRun();
+	bool allTasksAreDone();
+	int getStartTimeOfJob();
+	int getEndTimeOfJob();
 
 
 private:

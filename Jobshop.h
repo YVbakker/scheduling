@@ -21,6 +21,8 @@ public:
 	int getCriticalPath(unsigned short durationLastFinishedJob = 0);
 	bool checkIfMachineIsReadyToRun(unsigned short aMachine);
 	bool compareSlackWithOtherJobWithSameMachine(unsigned short aMachine, unsigned short aCurrentSlack);
+	bool checkIfAllJobsAreDone();
+	void giveOutput();
 //	bool checkIfMachineWhoWantToRunHasToLowestSlack(unsigned short machine, unsigned short jobPosition);
 
 private:

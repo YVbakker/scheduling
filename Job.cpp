@@ -143,25 +143,15 @@ unsigned short Job::getDurationOfBusyTask(unsigned short aCurrentTime) {
 	return -1;
 }
 
-//unsigned short Job::compareSlackWithOtherJobWithSameMachine(
-//		unsigned short aMachine, unsigned short aCurrentSlack) {
-//	for (unsigned long i = 0; i < taskList.size(); i += 2) {
-//		if (taskList.at(i).getStatus() == 0) {
-//			std::cout<< "Taak "
-//			if(taskList.at(i).calculateSlack(taskList.at(i).getStartTime(),
-//					taskList.at(i).getEndTime()) < aCurrentSlack){
-//				if(taskList.at(i).getMachine() == aMachine){
-//					std::cout << "Het is false !" <<std::endl;
-//					return false;
-//				}
-//
-//			}
-//
-//		}
-//	}
-//	std::cout << "Het is waar !" <<std::endl;
-//	return true;
-//}
+bool Job::allTasksAreDone(){
+for (unsigned long i = 0; i < taskList.size(); ++i){
+	if(taskList.at(i).getStatus() != 2){
+		return false;
+	}
+}
+std::cout << "Alle Taken van deze job zijn klaar !!!!" << std::endl;
+return true;
+}
 
 unsigned short Job::getSlackOfFirstJobToRun() {
 	for (unsigned long i = 0; i < taskList.size(); ++i) {
@@ -175,4 +165,12 @@ unsigned short Job::getSlackOfFirstJobToRun() {
 		}
 	}
 	return -1;
+}
+
+int Job::getStartTimeOfJob() {
+return taskList.at(0).getStartTime();
+}
+
+int Job::getEndTimeOfJob() {
+	return taskList.at(taskList.size() - 1).getEndTimeOfTask();
 }
