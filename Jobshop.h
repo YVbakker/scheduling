@@ -9,10 +9,11 @@
 #define JOBSHOP_H_
 
 #include "Job.h"
+#include <iostream>
 
 class JobShop {
 public:
-	JobShop();
+	JobShop(std::string aFile);
 	virtual ~JobShop();
 	void addJob();
 	void giveJobTasks(std::vector<int> aTasksListForJob,
@@ -24,12 +25,15 @@ public:
 	bool checkIfAllJobsAreDone();
 	void giveOutput();
 //	bool checkIfMachineWhoWantToRunHasToLowestSlack(unsigned short machine, unsigned short jobPosition);
+	void makeJobList(std::vector<int> jobs);
+	void makePartsJobList(int nMachines, std::vector<int> & parts);
+	void makeStringToArrayList(std::string aFile);
+
 
 private:
+	std::vector<int> allNumbersToList;
 	std::vector<Job> joblist;
-	std::vector<int> tasksListForJob;
-	std::vector<int> tasksListForJob2;
-	std::vector<int> tasksListForJob3;
+	std::vector<int>partList;
 	unsigned short nMachines;
 	unsigned short nJobs;
 	unsigned short currentTime;

@@ -36,6 +36,12 @@ void Job::addTask(unsigned short aMachine, unsigned short aDuration) {
 	taskList.push_back(Task(aMachine, aDuration));
 }
 
+//void Job::addListOfTasks(std::vector<Task> aListOfTasks){
+//	for(unsigned long i = 0; i < aListOfTasks.size(); i+=2){
+//		addTask(aListOfTasks.at(i), aListOfTasks.at(i+1))
+//	}
+//}
+
 unsigned short Job::getStatus() const {
 	return status;
 }

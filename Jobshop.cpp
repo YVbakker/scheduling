@@ -7,17 +7,22 @@
 
 #include "JobShop.h"
 #include <iostream>
+#include <regex>
+#include <string>
 
-JobShop::JobShop() {
+JobShop::JobShop(std::string aFile) {
 	// TODO Auto-generated constructor stub
-	addJob();
-	addJob();
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
+	makeStringToArrayList(aFile);
+	makeJobList(allNumbersToList); // Makes a list of jobs
 //	addJob();
-	tasksListForJob = { 0, 30, 1, 30, 2, 10 };
-	tasksListForJob2 = { 0, 60, 1, 15, 2, 10 };
+//	addJob();
+//	addJob();
+//	tasksListForJob = { 0, 30, 1, 30, 2, 10 };
+//	tasksListForJob2 = { 0, 60, 1, 15, 2, 10 };
 //	tasksListForJob3 = { 1, 50, 2, 16, 0, 5 };
-	giveJobTasks(tasksListForJob, 0);
-	giveJobTasks(tasksListForJob2, 1);
+//	giveJobTasks(tasksListForJob, 0);
+//	giveJobTasks(tasksListForJob2, 1);
 //	giveJobTasks(tasksListForJob3, 2);
 }
 
@@ -203,132 +208,38 @@ void JobShop::giveOutput (){
 	}
 }
 
-//
-//void JobShop::run() {
-//	unsigned short stap = 0;
-//	unsigned short path = getCriticalPath();
-//	currentTime = 0;
-//	while (path > 0){
-//		if(stap == 0){
-//			std::cout << "Stap 0" << std::endl;
-//			path = getCriticalPath();
-//			for(unsigned long i = 0; i < joblist.size(); ++i){ // Stap 1
-//				joblist.at(i).setCurrentTime(currentTime);
-//				joblist.at(i).generateStartAndEndTime(path);
-//			}
-//			stap = 1;
-//		}
-//
-//		if(stap == 1){
-//			std::cout << "Stap 1" << std::endl;
-//			for(unsigned long i = 0; i < joblist.size(); ++i){ // Stap 1
-//				if(joblist.at(i).calculateTotalTime() == path){
-//					joblist.at(i).setFirstFreeTaskToBusy(currentTime);
-//					std::cout << "Job : " << i << " is begonnen met runnen" << std::endl;
-//					stap = 2;
-//					break;
-//				}
-//			}
-//		}
-//
-//		else if (stap == 2){
-//			std::cout << "Stap 2" << std::endl;
-//			for(unsigned long i = 0; i < joblist.size(); ++i){ // Stap 1
-//				if(joblist.at(i).getStatus() == 0){
-//					std::cout << i << std::endl;
-//					if(checkIfMachineIsReadyToRun(joblist.at(i).getFirstMachineToRun())){
-//						std::cout << i << std::endl;
-//						if(checkIfMachineWhoWantToRunHasToLowestSlack(joblist.at(i).getFirstMachineToRun(), i)){
-////						std::cout << "Hij mag uitgevoerd worden!" << i << std::endl;
-//						joblist.at(i).setFirstFreeTaskToBusy(currentTime);
-//						std::cout << "Job : " << i << " is begonnen met runnen" << std::endl;
-//						}
-//					}
-//				}
-//			}
-//			stap = 3;
-//		}
-//
-//		else if(stap == 3){
-//			std::cout << "Stap 3" << std::endl;
-//			unsigned short kortsteTijd = path;
-//			for(unsigned long i = 0; i < joblist.size(); ++i){
-//				if(joblist.at(i).getBusyDuration() >= 0 && joblist.at(i).getBusyDuration() < kortsteTijd){
-//					kortsteTijd = joblist.at(i).getBusyDuration();
-//				}
-//			}
-//			stap = 4;
-////			std::cout << "Kortste tijd is = " << kortsteTijd << std::endl;
-//			currentTime += kortsteTijd;
-//		}
-//
-//		else if(stap == 4){
-//			std::cout << "Stap 4" << std::endl;
-//			for(unsigned short i = 0; i < joblist.size(); ++i){
-////				std::cout << "Huidige Status van job : " << i << std::endl;
-//				joblist.at(i).setCurrentTime(currentTime);
-//				joblist.at(i).checkIfTaskTimeIsDone(currentTime);
-//			}
-//			stap = 5;
-//		}
-//
-//		else if (stap == 5){
-//			std::cout << "Stap 5" << std::endl;
-//			for(unsigned short i = 0; i < joblist.size(); ++i){
-//				joblist.at(i).setCurrentTime(currentTime);
-//				joblist.at(i).generateStartAndEndTime(path);
-//			}
-//			stap = 6;
-//		}
-//
-//		if(stap == 6){
-//			std::cout << "Stap 6" << std::endl;
-//			path = getCriticalPath();
-//			for(unsigned long i = 0; i < joblist.size(); ++i){ // Stap 1
-//				joblist.at(i).setCurrentTime(currentTime);
-//				joblist.at(i).generateStartAndEndTime(path);
-////				std::cout << "Total time of job : " << i << " is " << joblist.at(i).calculateTotalTime() << std::endl;
-//				if(joblist.at(i).calculateTotalTime() == path){
-//					if(checkIfMachineIsReadyToRun(joblist.at(i).getFirstMachineToRun())){
-////					std::cout << "Total time of job : " << i << " is " << joblist.at(i).calculateTotalTime() << std::endl;
-//					joblist.at(i).setFirstFreeTaskToBusy(currentTime);
-//					std::cout << "Job : " << i << " is begonnen met runnen" << std::endl;
-////					break;
-//					}
-//				}
-//			}
-//			stap = 2;
-//		}
-//
-//		else{
-////		std::cout << currentTime << std::endl;
-////		currentTime ++;
-//		}
-//	}
-//for (unsigned long i = 0; i < joblist.size(); ++i){
-//	std::cout << "Job : " << i << " has a startTime of = " << joblist.at(i).getTaskList().at(0).getStartTime() << " and a end time of " << joblist.at(i).getTaskList().at(2).getEndTime() << std::endl;
-//}
-//
-//}
-//
-//
-//
-//bool JobShop::checkIfMachineWhoWantToRunHasToLowestSlack(unsigned short machine, unsigned short jobPosition){
-//	unsigned short leastSlack = joblist.at(jobPosition).getSlackOfFirstJobToRun();
-//	std::cout << "Slack of job " << jobPosition << " is : " << leastSlack << std::endl;
-//	for (unsigned long i = 0; i < joblist.size(); ++i){
-//		if(joblist.at(i).getStatus() == 0){
-//			std::cout << "Job : " << i << " has a slack = " << joblist.at(i).getSlackOfFirstJobToRun() << std::endl;
-//			std::cout << "Job : " << i << " has a status = " << joblist.at(i).getStatus() << std::endl;
-//			std::cout << "Job : " << i << " has a machine = " << joblist.at(i).getFirstMachineToRun() << std::endl;
-//			std::cout << "Job : " << i << " has a duration of = " << joblist.at(i).getTaskList().at(0).getDuration() << std::endl;
-//			if(joblist.at(i).getFirstMachineToRun() == machine){
-//			if(joblist.at(i).checkSlackOfFirstJobToRun(machine) >= 0 && joblist.at(i).checkSlackOfFirstJobToRun(machine) < leastSlack){
-////				std::cout << "HET IS FALSE" << std::endl;
-//				return false;
-//			}
-//			}
-//		}
-//	}
-//	return true;
-//}
+void JobShop::makeStringToArrayList(std::string aFile){
+    std::smatch m;
+    std::regex r("[0-9]+");
+	  while (std::regex_search(aFile, m, r)){
+		  allNumbersToList.push_back(stoi(m.str(0)));
+		        aFile = m.suffix().str();
+
+	  }
+}
+
+void JobShop::makeJobList(std::vector<int> jobs) {
+	nJobs = jobs.at(0); 		// first number is number of jobs
+	jobs.erase(jobs.begin()); 	// delete first value
+	nMachines = jobs.at(0); 	// our new first number is number of jobs
+	jobs.erase(jobs.begin());	// delete first value
+
+	for (int i = 0; i < nJobs; ++i){
+	makePartsJobList(nMachines, jobs);	// Make parts list (duration, machine) for every job
+	addJob();
+	joblist.at(i).addTask(partList.at(0), partList.at(1));	// push the vector of part list to your new job
+	partList.clear();					// clear the part list because you want to put a new list of parts in it
+	}
+
+}
+
+void JobShop::makePartsJobList(int nMachines, std::vector<int>&parts) {
+	for (int i = 0; i < 2*nMachines; i+=2){
+		std::cout << " -------------------- " << std::endl;
+partList.push_back(parts.at(0));	// part one (duration) is pushed in the part list
+partList.push_back(parts.at(1));	// part two (machine) is pushed in the part list
+parts.erase(parts.begin());			// now part one is added to the part list, can we delete it
+parts.erase(parts.begin());			// now part two is added to the part list, can we delete it
+	}
+
+}

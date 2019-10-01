@@ -32,6 +32,7 @@ public:
 	bool allTasksAreDone();
 	int getStartTimeOfJob();
 	int getEndTimeOfJob();
+	void addListOfTasks(std::vector<Task> aListOfTasks);
 
 
 private:
