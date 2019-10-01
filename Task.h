@@ -21,12 +21,15 @@ public:
 	unsigned short getStatus() const;
 	void setStatus(unsigned short status);
 	int calculateSlack(unsigned short aStartTime, unsigned short aEndTime);
+	unsigned short getEndTimeOfTask() const;
+	void setEndTimeOfTask(unsigned short endTimeOfTask);
 
 private:
 	unsigned short machine;
 	unsigned short duration;
 	unsigned short startTime;
 	unsigned short endTime;
+	unsigned short endTimeOfTask;
 	unsigned short status;
 };
 

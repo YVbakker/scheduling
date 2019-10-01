@@ -53,3 +53,11 @@ void Task::setStatus(unsigned short status) {
 int Task::calculateSlack(unsigned short aStartTime, unsigned short aEndTime) {
 	return (aEndTime - aStartTime);
 }
+
+unsigned short Task::getEndTimeOfTask() const {
+	return endTimeOfTask;
+}
+
+void Task::setEndTimeOfTask(unsigned short endTimeOfTask) {
+	this->endTimeOfTask = endTimeOfTask;
+}

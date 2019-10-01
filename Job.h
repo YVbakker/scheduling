@@ -15,18 +15,18 @@ class Job {
 public:
 	Job();
 	virtual ~Job();
-	unsigned short calculateTotalTime();
+	unsigned short calculateTotalTime(unsigned short aCurrentTime, unsigned short laatsteJobDuration = 0);
 	void addTask(unsigned short aMachine, unsigned short aDuration);
 	unsigned short getStatus() const;
 	void setStatus(unsigned short aStatus);
 	const std::vector<Task>& getTaskList() const;
-	void genereerStartTimeForTask(unsigned short aCurrentTime);
+	void genereerStartTimeForTask(unsigned short aCurrentTime, unsigned short laatsteJobDuration = 0);
 	void genereerEndTimeForTask(unsigned short aCriticalPath);
 	unsigned short getFirstMachineToRun();
 	unsigned short getBusyMachine();
 	void setFirstFreeTaskToBusy(unsigned short aCurrentTime);
 	void checkIfTaskIsFinished(unsigned short aCurrentTime);
-	unsigned short getDurationOfBusyTask();
+	unsigned short getDurationOfBusyTask(unsigned short aCurrentTime);
 //	unsigned short compareSlackWithOtherJobWithSameMachine(unsigned short aMachine, unsigned short aCurrentSlack);
 	unsigned short getSlackOfFirstJobToRun();
 

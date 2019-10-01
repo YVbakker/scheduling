@@ -18,7 +18,7 @@ public:
 	void giveJobTasks(std::vector<int> aTasksListForJob,
 			unsigned short position);
 	void run();
-	int getCriticalPath();
+	int getCriticalPath(unsigned short durationLastFinishedJob = 0);
 	bool checkIfMachineIsReadyToRun(unsigned short aMachine);
 	bool compareSlackWithOtherJobWithSameMachine(unsigned short aMachine, unsigned short aCurrentSlack);
 //	bool checkIfMachineWhoWantToRunHasToLowestSlack(unsigned short machine, unsigned short jobPosition);
@@ -31,6 +31,7 @@ private:
 	unsigned short nMachines;
 	unsigned short nJobs;
 	unsigned short currentTime;
+	unsigned short path;
 };
 
 #endif /* JOBSHOP_H_ */

@@ -18,11 +18,14 @@ Job::~Job() {
 	// TODO Auto-generated destructor stub
 }
 
-unsigned short Job::calculateTotalTime() {
-	unsigned short totalTime = 0;
+unsigned short Job::calculateTotalTime(unsigned short aCurrentTime, unsigned short laatsteJobDuration) {
+	unsigned short totalTime = aCurrentTime;
 	for (unsigned long i = 0; i < taskList.size(); ++i) {
-		if (taskList.at(i).getStatus() == 0) {
+		if (taskList.at(i).getStatus() == 0){
 			totalTime += taskList.at(i).getDuration();
+		}
+		else if(taskList.at(i).getStatus() == 1) {
+			totalTime += (taskList.at(i).getEndTimeOfTask() - aCurrentTime);
 		}
 	}
 	std::cout << "Total time = " << totalTime << std::endl;
@@ -45,9 +48,13 @@ const std::vector<Task>& Job::getTaskList() const {
 	return taskList;
 }
 
-void Job::genereerStartTimeForTask(unsigned short aCurrentTime) {
+void Job::genereerStartTimeForTask(unsigned short aCurrentTime, unsigned short laatsteJobDuration) {
 	unsigned short start = aCurrentTime;
+	std::cout << "GenereerStartTijd start = " << laatsteJobDuration << std::endl;
 	for (long unsigned i = 0; i < taskList.size(); i++) {
+		if(taskList.at(i).getStatus() == 1){
+			start += (taskList.at(i).getEndTimeOfTask() - aCurrentTime);
+		}
 		if (taskList.at(i).getStatus() == 0) {
 			taskList.at(i).setStartTime(start);
 			start += taskList.at(i).getDuration();
@@ -60,11 +67,11 @@ void Job::genereerStartTimeForTask(unsigned short aCurrentTime) {
 void Job::genereerEndTimeForTask(unsigned short aCriticalPath) {
 	unsigned short eind = aCriticalPath;
 	for (long unsigned i = taskList.size(); i > 0; --i) {
+		unsigned short durationOfTask = taskList.at(i - 1).getDuration();
 		if (taskList.at(i - 1).getStatus() == 0) {
-			taskList.at(i - 1).setEndTime(
-					eind - taskList.at(i - 1).getDuration());
-			eind -= taskList.at(i - 1).getDuration();
-			std::cout << "Taak " << i - 1 << " heeft de starttijd "
+			taskList.at(i - 1).setEndTime(eind - durationOfTask);
+			eind -= durationOfTask;
+			std::cout << "Taak " << i - 1 << " heeft de eindtijd "
 					<< taskList.at(i - 1).getEndTime() << std::endl;
 		}
 	}
@@ -73,7 +80,7 @@ void Job::genereerEndTimeForTask(unsigned short aCriticalPath) {
 unsigned short Job::getFirstMachineToRun() {
 	for (unsigned long i = 0; i < taskList.size(); i++) {
 		if (taskList.at(i).getStatus() == 0) {
-			std::cout << "Machine " << i
+			std::cout << "Machine " << taskList.at(i).getMachine()
 					<< " is the first who can start of this job" << std::endl;
 			return taskList.at(i).getMachine();
 		}
@@ -85,7 +92,7 @@ unsigned short Job::getBusyMachine() {
 
 	for (unsigned long i = 0; i < taskList.size(); i++) {
 		if (taskList.at(i).getStatus() == 1) {
-			std::cout << "Machine " << i << " is busy" << std::endl;
+			std::cout << "Machine " << taskList.at(i).getMachine() << " is busy" << std::endl;
 			return taskList.at(i).getMachine();
 		}
 	}
@@ -99,6 +106,8 @@ void Job::setFirstFreeTaskToBusy(unsigned short aCurrentTime) {
 					<< std::endl;
 			taskList.at(i).setStatus(1);
 			taskList.at(i).setStartTime(aCurrentTime);
+			taskList.at(i).setEndTimeOfTask(aCurrentTime + taskList.at(i).getDuration());
+			std::cout << "Taak " << i << " zal klaar zijn op tijdstip " << taskList.at(i).getEndTimeOfTask() << std::endl;
 			status = 1;
 			break;
 		}
@@ -110,7 +119,7 @@ void Job::checkIfTaskIsFinished(unsigned short aCurrentTime) {
 		if (taskList.at(i).getStatus() == 1) {
 			if (taskList.at(i).getStartTime() + taskList.at(i).getDuration()
 					== aCurrentTime) {
-				std::cout << "Taak is afgerond met de volgende tijden : "
+				std::cout << "Taak " << i << " is afgerond met de volgende tijden : "
 						<< taskList.at(i).getStartTime()
 								+ taskList.at(i).getDuration()
 						<< " en de huidige tijd nu is : " << aCurrentTime
@@ -123,12 +132,12 @@ void Job::checkIfTaskIsFinished(unsigned short aCurrentTime) {
 	}
 }
 
-unsigned short Job::getDurationOfBusyTask() {
+unsigned short Job::getDurationOfBusyTask(unsigned short aCurrentTime) {
 	for (unsigned long i = 0; i < taskList.size(); i++) {
 		if (taskList.at(i).getStatus() == 1) {
 			std::cout << "Taak " << i << " is bezig en heeft een duration van "
-					<< taskList.at(i).getDuration() << std::endl;
-			return taskList.at(i).getDuration();
+					<< taskList.at(i).getEndTimeOfTask() - aCurrentTime << std::endl;
+			return (taskList.at(i).getEndTimeOfTask() - aCurrentTime);
 		}
 	}
 	return -1;
@@ -155,12 +164,12 @@ unsigned short Job::getDurationOfBusyTask() {
 //}
 
 unsigned short Job::getSlackOfFirstJobToRun() {
-	for (unsigned long i = 0; i < taskList.size(); i += 2) {
+	for (unsigned long i = 0; i < taskList.size(); ++i) {
 		if (taskList.at(i).getStatus() == 0) {
-			std::cout << "De slack van taak " << i << " is "
-					<< taskList.at(i).calculateSlack(
-							taskList.at(i).getStartTime(),
-							taskList.at(i).getEndTime()) << std::endl;
+//			std::cout << "De slack van taak " << i << " is "
+//					<< taskList.at(i).calculateSlack(
+//							taskList.at(i).getStartTime(),
+//							taskList.at(i).getEndTime()) << std::endl;
 			return taskList.at(i).calculateSlack(taskList.at(i).getStartTime(),
 					taskList.at(i).getEndTime());
 		}
