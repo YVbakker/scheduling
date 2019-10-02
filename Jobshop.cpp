@@ -37,20 +37,20 @@ void JobShop::addJob() {
 void JobShop::giveJobTasks(std::vector<int> aTasksListForJob,
 		unsigned short position) {
 
-	for (long long unsigned i = 0; i <= aTasksListForJob.size(); ++i) {
-		joblist.at(position).addTask(aTasksListForJob.at(0),
-				aTasksListForJob.at(1));
-		aTasksListForJob.erase(aTasksListForJob.begin());
-		aTasksListForJob.erase(aTasksListForJob.begin());
+	for (long long unsigned i = 0; i < aTasksListForJob.size(); i+=2) {
+		joblist.at(position).addTask(aTasksListForJob.at(i),
+				aTasksListForJob.at(i+1));
 	}
 }
 
 void JobShop::run() {
+	currentTime = 0;
 	unsigned short stap = 0;
 	path = getCriticalPath();
 	unsigned short kortsteTijd = 0;
-	currentTime = 0;
 	while (checkIfAllJobsAreDone() == false){
+		controleerOfJobIsFinished();
+
 		if (stap == 0) {
 			std::cout
 					<< "------------------------- Stap 0 --------------------------------"
@@ -69,8 +69,7 @@ void JobShop::run() {
 					<< std::endl;
 			for (unsigned long i = 0; i < joblist.size(); ++i) {
 				if (joblist.at(i).getStatus() == 0) {
-					if (joblist.at(i).calculateTotalTime(currentTime,
-							kortsteTijd) == path) {
+					if (joblist.at(i).calculateTotalTime(currentTime) == path) {
 						if (checkIfMachineIsReadyToRun(
 								joblist.at(i).getFirstMachineToRun())) {
 							joblist.at(i).setStatus(1);
@@ -129,7 +128,7 @@ void JobShop::run() {
 			std::cout
 					<< "------------------------- Stap 4 --------------------------------"
 					<< std::endl;
-			path = getCriticalPath(kortsteTijd);
+			path = getCriticalPath();
 			for (unsigned long i = 0; i < joblist.size(); ++i) { // Stap 1
 				joblist.at(i).genereerStartTimeForTask(currentTime,
 						kortsteTijd);
@@ -176,13 +175,12 @@ bool JobShop::checkIfMachineIsReadyToRun(unsigned short aMachine) {
 	return true;
 }
 
-int JobShop::getCriticalPath(unsigned short durationLastFinishedJob) {
+int JobShop::getCriticalPath() {
 	unsigned short criticalPath = 0;
 	unsigned short totalTimeJob = 0;
 
 	for (unsigned long i = 0; i < joblist.size(); ++i) {
-		totalTimeJob = joblist.at(i).calculateTotalTime(currentTime,
-				durationLastFinishedJob);
+		totalTimeJob = joblist.at(i).calculateTotalTime(currentTime);
 		if (totalTimeJob > criticalPath) {
 			criticalPath = totalTimeJob;
 		}
@@ -190,6 +188,15 @@ int JobShop::getCriticalPath(unsigned short durationLastFinishedJob) {
 
 	std::cout << "Het criticalpath is : " << criticalPath << std::endl;
 	return criticalPath;
+}
+
+void JobShop::controleerOfJobIsFinished(){
+	for (unsigned long i = 0; i < joblist.size(); ++i){
+		if(joblist.at(i).allTasksAreDone() == true){
+			std::cout << "------------------------------------------------------------------------------------------ job " << i << " is finished" << std::endl;
+			joblist.at(i).setStatus(2);
+		}
+	}
 }
 
 bool JobShop::checkIfAllJobsAreDone(){
@@ -220,26 +227,25 @@ void JobShop::makeStringToArrayList(std::string aFile){
 
 void JobShop::makeJobList(std::vector<int> jobs) {
 	nJobs = jobs.at(0); 		// first number is number of jobs
+	std::cout << "Number of jobs is " << nJobs << std::endl;
 	jobs.erase(jobs.begin()); 	// delete first value
 	nMachines = jobs.at(0); 	// our new first number is number of jobs
+	std::cout << "Number of machines is " << nMachines << std::endl;
 	jobs.erase(jobs.begin());	// delete first value
 
 	for (int i = 0; i < nJobs; ++i){
 	makePartsJobList(nMachines, jobs);	// Make parts list (duration, machine) for every job
 	addJob();
-	joblist.at(i).addTask(partList.at(0), partList.at(1));	// push the vector of part list to your new job
+	giveJobTasks(partList, i);
 	partList.clear();					// clear the part list because you want to put a new list of parts in it
 	}
 
 }
 
-void JobShop::makePartsJobList(int nMachines, std::vector<int>&parts) {
-	for (int i = 0; i < 2*nMachines; i+=2){
-		std::cout << " -------------------- " << std::endl;
+void JobShop::makePartsJobList(unsigned short nMachines, std::vector<int>&parts) {
+	for (unsigned long i = 0; i < (nMachines * 2); ++i){
 partList.push_back(parts.at(0));	// part one (duration) is pushed in the part list
-partList.push_back(parts.at(1));	// part two (machine) is pushed in the part list
 parts.erase(parts.begin());			// now part one is added to the part list, can we delete it
-parts.erase(parts.begin());			// now part two is added to the part list, can we delete it
 	}
 
 }

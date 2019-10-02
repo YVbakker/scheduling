@@ -18,7 +18,7 @@ Job::~Job() {
 	// TODO Auto-generated destructor stub
 }
 
-unsigned short Job::calculateTotalTime(unsigned short aCurrentTime, unsigned short laatsteJobDuration) {
+unsigned short Job::calculateTotalTime(unsigned short aCurrentTime) {
 	unsigned short totalTime = aCurrentTime;
 	for (unsigned long i = 0; i < taskList.size(); ++i) {
 		if (taskList.at(i).getStatus() == 0){

@@ -15,7 +15,7 @@ class Job {
 public:
 	Job();
 	virtual ~Job();
-	unsigned short calculateTotalTime(unsigned short aCurrentTime, unsigned short laatsteJobDuration = 0);
+	unsigned short calculateTotalTime(unsigned short aCurrentTime);
 	void addTask(unsigned short aMachine, unsigned short aDuration);
 	unsigned short getStatus() const;
 	void setStatus(unsigned short aStatus);

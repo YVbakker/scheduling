@@ -19,21 +19,25 @@ public:
 	void giveJobTasks(std::vector<int> aTasksListForJob,
 			unsigned short position);
 	void run();
-	int getCriticalPath(unsigned short durationLastFinishedJob = 0);
+	int getCriticalPath();
 	bool checkIfMachineIsReadyToRun(unsigned short aMachine);
 	bool compareSlackWithOtherJobWithSameMachine(unsigned short aMachine, unsigned short aCurrentSlack);
 	bool checkIfAllJobsAreDone();
 	void giveOutput();
 //	bool checkIfMachineWhoWantToRunHasToLowestSlack(unsigned short machine, unsigned short jobPosition);
 	void makeJobList(std::vector<int> jobs);
-	void makePartsJobList(int nMachines, std::vector<int> & parts);
+	void makePartsJobList(unsigned short nMachines, std::vector<int> & parts);
 	void makeStringToArrayList(std::string aFile);
+	void controleerOfJobIsFinished();
 
 
 private:
-	std::vector<int> allNumbersToList;
 	std::vector<Job> joblist;
+	std::vector<int> allNumbersToList;
 	std::vector<int>partList;
+	std::vector<int> tasksListForJob;
+	std::vector<int> tasksListForJob2;
+	std::vector<int> tasksListForJob3;
 	unsigned short nMachines;
 	unsigned short nJobs;
 	unsigned short currentTime;
