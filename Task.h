@@ -10,27 +10,34 @@
 
 class Task {
 public:
+//	Constructors
 	Task(unsigned short aMachine, unsigned short aDuration);
 	virtual ~Task();
+
+//	getters
 	unsigned short getDuration() const;
 	unsigned short getEndTime() const;
-	void setEndTime(unsigned short endTime);
 	unsigned short getMachine() const;
 	unsigned short getStartTime() const;
-	void setStartTime(unsigned short startTime);
 	unsigned short getStatus() const;
-	void setStatus(unsigned short status);
-	int calculateSlack(unsigned short aStartTime, unsigned short aEndTime);
 	unsigned short getEndTimeOfTask() const;
+
+//	setters
+	void setEndTime(unsigned short endTime);
+	void setStartTime(unsigned short startTime);
+	void setStatus(unsigned short status);
 	void setEndTimeOfTask(unsigned short endTimeOfTask);
 
+//	calculate
+	unsigned short calculateSlack();
+
 private:
-	unsigned short machine;
-	unsigned short duration;
-	unsigned short startTime;
-	unsigned short endTime;
-	unsigned short endTimeOfTask;
-	unsigned short status;
+	unsigned short machine;			// Machine for this task
+	unsigned short duration;		// Duration for this task
+	unsigned short startTime;		// Minimum of start time
+	unsigned short endTime;			// Maximum of start time
+	unsigned short endTimeOfTask;	// Real time of ending this task
+	unsigned short status;	// Status of this job (0 = free, 1 = busy, 2 = done)
 };
 
 #endif /* TASK_H_ */

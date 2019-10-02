@@ -13,31 +13,42 @@
 
 class Job {
 public:
+//	constructors
 	Job();
 	virtual ~Job();
-	unsigned short calculateTotalTime(unsigned short aCurrentTime);
-	void addTask(unsigned short aMachine, unsigned short aDuration);
+
+//	Getters
 	unsigned short getStatus() const;
-	void setStatus(unsigned short aStatus);
 	const std::vector<Task>& getTaskList() const;
-	void genereerStartTimeForTask(unsigned short aCurrentTime, unsigned short laatsteJobDuration = 0);
-	void genereerEndTimeForTask(unsigned short aCriticalPath);
 	unsigned short getFirstMachineToRun();
 	unsigned short getBusyMachine();
-	void setFirstFreeTaskToBusy(unsigned short aCurrentTime);
-	void checkIfTaskIsFinished(unsigned short aCurrentTime);
 	unsigned short getDurationOfBusyTask(unsigned short aCurrentTime);
-//	unsigned short compareSlackWithOtherJobWithSameMachine(unsigned short aMachine, unsigned short aCurrentSlack);
-	unsigned short getSlackOfFirstJobToRun();
-	bool allTasksAreDone();
-	int getStartTimeOfJob();
-	int getEndTimeOfJob();
+	unsigned short getSlackOfFirstTaskToRun();
+	unsigned short getStartTimeOfJob();
+	unsigned short getEndTimeOfJob();
+
+//	Setters
+	void setStatus(unsigned short aStatus);
+	void setFirstFreeTaskToBusy(unsigned short aCurrentTime);
+
+//	Add
+	void addTask(unsigned short aMachine, unsigned short aDuration);
 	void addListOfTasks(std::vector<Task> aListOfTasks);
 
+//	calculate
+	unsigned short calculateTotalTimeOfJob(unsigned short aCurrentTime);
+
+//	Generate
+	void setsTheMinimumStartTimeOfTasks(unsigned short aCurrentTime);
+	void setsTheMaximumStartTimeOfTasks(unsigned short aCriticalPath);
+
+// 	checking
+	void setTasksWhoFinishedToDone(unsigned short aCurrentTime);
+	bool allTasksAreDone();
 
 private:
-	std::vector<Task>taskList;
-	unsigned short status;
+	std::vector<Task> taskList;	// a vector of tasks
+	unsigned short status;// the current status of this job (0 = free, 1 = busy, 2 = done)
 };
 
 #endif /* JOB_H_ */
