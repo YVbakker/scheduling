@@ -47,8 +47,10 @@ void JobShop::run() {
 		if (stap == 0) {
 			criticalPath = getCriticalPath(); // The criticalPath will be calculated
 			for (unsigned long i = 0; i < jobList.size(); ++i) {
-				jobList.at(i).setsTheMinimumStartTimeOfTasks(currentTime); // The minimum start time for every task will be initialized
-				jobList.at(i).setsTheMaximumStartTimeOfTasks(criticalPath);	// The maximum start time of every task will be initialized
+				if (jobList.at(i).getStatus() != 2) { // If job is not finished
+					jobList.at(i).setsTheMinimumStartTimeOfTasks(currentTime); // Update the minimum start time of a task
+					jobList.at(i).setsTheMaximumStartTimeOfTasks(criticalPath); // Update the maximum start time of a task
+				}
 			}
 			stap = 1;
 		}
@@ -101,18 +103,7 @@ void JobShop::run() {
 				jobList.at(i).setTasksWhoFinishedToDone(currentTime); // Set the status of the tasks who are finished to done
 			}
 			setJobsWhoHaveNoFreeTaskToDone(); // Sets the jobs who have no free tasks to done
-			stap = 4;
-		}
-
-		if (stap == 4) {
-			criticalPath = getCriticalPath();	// Update the critical path
-			for (unsigned long i = 0; i < jobList.size(); ++i) {
-				if (jobList.at(i).getStatus() != 2) { // If job is not finished
-					jobList.at(i).setsTheMinimumStartTimeOfTasks(currentTime); // Update the minimum start time of a task
-					jobList.at(i).setsTheMaximumStartTimeOfTasks(criticalPath); // Update the maximum start time of a task
-				}
-			}
-			stap = 1;
+			stap = 0;
 		}
 	}
 	giveOutput(); // When the while loop is done, this function will give the output in the console
