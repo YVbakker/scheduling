@@ -6,6 +6,7 @@
  */
 
 #include "JobShop.h"
+
 #include <iostream>
 #include <regex>
 #include <string>
@@ -62,19 +63,19 @@ void JobShop::run() {
 					== criticalPath) {
 						if (checkIfMachineIsReadyToRun(	// If first machine who can start of this job is ready to run
 								jobList.at(i).getFirstMachineToRun())
-								&& jobList.at(i).getFirstMachineToRun() != -1) {
+							&& jobList.at(i).getFirstMachineToRun() != USHRT_MAX) {
 							jobList.at(i).setStatus(1);	// Set status of this job to busy
 							jobList.at(i).setFirstFreeTaskToBusy(currentTime);// Set the status of this first free task to busy
 						}
 					} else if (checkIfMachineIsReadyToRun(// Else if the first machine who can start of this job is ready to run
 							jobList.at(i).getFirstMachineToRun())
-							&& jobList.at(i).getFirstMachineToRun() != -1) {
+							&& jobList.at(i).getFirstMachineToRun() != USHRT_MAX) {
 						if (compareSlackWithOtherJobWithSameMachines(
 								// If the first job who can start of this job has the lowest slack of this machine
 								jobList.at(i).getFirstMachineToRun(),
 								jobList.at(i).getSlackOfFirstTaskToRun())
 								&& jobList.at(i).getSlackOfFirstTaskToRun()
-										!= -1) {
+										!= USHRT_MAX) {
 							jobList.at(i).setStatus(1);	// Set the status of this job to busy
 							jobList.at(i).setFirstFreeTaskToBusy(currentTime);// Set the status of this first free task to busy
 						}
@@ -89,7 +90,7 @@ void JobShop::run() {
 			for (unsigned long i = 0; i < jobList.size(); ++i) {
 				unsigned short DurationOfBusyTask =
 						jobList.at(i).getDurationOfBusyTask(currentTime); // DurationOfBusyTask is the return value of the getDurationOfBusyTask function
-				if (DurationOfBusyTask != -1
+				if (DurationOfBusyTask != USHRT_MAX
 						&& DurationOfBusyTask < shortestValue) { // If Duration of the busy task is fewer than the shortest value
 					shortestValue = DurationOfBusyTask;	// Shortest value is now the duration of the busy task
 				}
@@ -117,10 +118,10 @@ bool JobShop::compareSlackWithOtherJobWithSameMachines(unsigned short aMachine,
 	for (unsigned long i = 0; i < jobList.size(); ++i) {
 		if (jobList.at(i).getStatus() == 0) {  // If job is free
 			if (jobList.at(i).getSlackOfFirstTaskToRun() < aCurrentSlack
-					&& jobList.at(i).getSlackOfFirstTaskToRun() != -1) // If slack of first task to run lower then the slack of the argument
+					&& jobList.at(i).getSlackOfFirstTaskToRun() != USHRT_MAX) // If slack of first task to run lower then the slack of the argument
 							{
 				if (jobList.at(i).getFirstMachineToRun() == aMachine
-						&& jobList.at(i).getFirstMachineToRun() != -1) // If the machine with the lower slack is the same as the machine of the argument
+						&& jobList.at(i).getFirstMachineToRun() != USHRT_MAX) // If the machine with the lower slack is the same as the machine of the argument
 								{
 					return false;
 				}
@@ -138,7 +139,7 @@ bool JobShop::compareSlackWithOtherJobWithSameMachines(unsigned short aMachine,
 bool JobShop::checkIfMachineIsReadyToRun(unsigned short aMachine) {
 	for (unsigned short i = 0; i < jobList.size(); ++i) {
 		if (jobList.at(i).getBusyMachine() == aMachine
-				&& jobList.at(i).getBusyMachine() != -1) { // If busy machine is equal to machine of the argument
+				&& jobList.at(i).getBusyMachine() != USHRT_MAX) { // If busy machine is equal to machine of the argument
 			return false;
 		}
 	}
