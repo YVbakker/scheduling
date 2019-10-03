@@ -53,16 +53,16 @@ void Job::setStatus(unsigned short aStatus)
 unsigned short Job::calculateTotalTimeOfJob(unsigned short aCurrentTime)
 {
 	unsigned short totalTime = aCurrentTime; // The start value of the total time
-	for (unsigned long i = 0; i < taskList.size(); ++i)
+	for(Task t : taskList)
 	{
-		if (taskList.at(i).getStatus() == 0)
-		{		// Check if the task is free
-			totalTime += taskList.at(i).getDuration();// If task is free plus the total time with the duration of the current task
-		}
-		else if (taskList.at(i).getStatus() == 1)
-		{	// Check if task is busy
-			totalTime += (taskList.at(i).getEndTimeOfTask() - aCurrentTime); // If task is busy pluss the total time with the time when the task ends minus the current time
-		}
+		if (t.getStatus() == 0)
+				{		// Check if the task is free
+					totalTime += t.getDuration();// If task is free plus the total time with the duration of the current task
+				}
+				else if (t.getStatus() == 1)
+				{	// Check if task is busy
+					totalTime += (t.getEndTimeOfTask() - aCurrentTime); // If task is busy pluss the total time with the time when the task ends minus the current time
+				}
 	}
 	return totalTime;
 }
