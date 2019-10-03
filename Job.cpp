@@ -53,17 +53,16 @@ void Job::setStatus(unsigned short aStatus)
 unsigned short Job::calculateTotalTimeOfJob(unsigned short aCurrentTime)
 {
 	unsigned short totalTime = aCurrentTime; // The start value of the total time
-	for(Task t : taskList)
+	for (Task t : taskList)
 	{
 		if (t.getStatus() == 0)
-				{		// Check if the task is free
-					totalTime += t.getDuration();// If task is free plus the total time with the duration of the current task
-				}
-				else if (t.getStatus() == 1)
-				{	// Check if task is busy
-					totalTime += (t.getEndTimeOfTask() - aCurrentTime); // If task is busy pluss the total time with the time when the task ends minus the current time
-				}
-
+		{		// Check if the task is free
+			totalTime += t.getDuration();// If task is free plus the total time with the duration of the current task
+		}
+		else if (t.getStatus() == 1)
+		{	// Check if task is busy
+			totalTime += (t.getEndTimeOfTask() - aCurrentTime); // If task is busy pluss the total time with the time when the task ends minus the current time
+		}
 	}
 	return totalTime;
 }
@@ -82,17 +81,16 @@ void Job::addTask(unsigned short aMachine, unsigned short aDuration)
 void Job::setsTheMinimumStartTimeOfTasks(unsigned short aCurrentTime)
 {
 	unsigned short minimumStartTime = aCurrentTime;	// minimumStartTime = current time
-	for (long unsigned i = 0; i < taskList.size(); i++)
+	for (Task t : taskList)
 	{
-		if (taskList.at(i).getStatus() == 1)
+		if (t.getStatus() == 1)
 		{				// If task is busy
-			minimumStartTime += (taskList.at(i).getEndTimeOfTask()
-					- aCurrentTime);// Plus the minimumStartTime with the time when the current task is finished minus the curent time
+			minimumStartTime += (t.getEndTimeOfTask() - aCurrentTime);// Plus the minimumStartTime with the time when the current task is finished minus the curent time
 		}
-		if (taskList.at(i).getStatus() == 0)
+		if (t.getStatus() == 0)
 		{				// If task is free
-			taskList.at(i).setStartTime(minimumStartTime);// Set the minimum start time of the task to minimumStartTime
-			minimumStartTime += taskList.at(i).getDuration();// Plus the minimumStartTime with the duration of the current task
+			t.setStartTime(minimumStartTime);// Set the minimum start time of the task to minimumStartTime
+			minimumStartTime += t.getDuration();// Plus the minimumStartTime with the duration of the current task
 		}
 	}
 }
@@ -126,7 +124,7 @@ unsigned short Job::getFirstMachineToRun()
 			return taskList.at(i).getMachine();	// Returns the machine of the current task
 		}
 	}
-	return USHRT_MAX;			// Returns a USHRT_MAX when there are no free tasks of this job
+	return USHRT_MAX;// Returns a USHRT_MAX when there are no free tasks of this job
 }
 
 // getBusyMachine gives the machine which is busy of this job
@@ -142,7 +140,7 @@ unsigned short Job::getBusyMachine()
 			return taskList.at(i).getMachine();	// Returns the machine of the busy task
 		}
 	}
-	return USHRT_MAX;		// Returns USHRT_MAX when there are no busy machines of this job
+	return USHRT_MAX;// Returns USHRT_MAX when there are no busy machines of this job
 }
 
 // setFirstFreeTaskToBusy sets the first free machine to busy
@@ -196,7 +194,7 @@ unsigned short Job::getDurationOfBusyTask(unsigned short aCurrentTime)
 			return (taskList.at(i).getEndTimeOfTask() - aCurrentTime);// Return the time when the task will ends minus the current time
 		}
 	}
-	return USHRT_MAX;							// Return USHRT_MAX when there is no busy task
+	return USHRT_MAX;			// Return USHRT_MAX when there is no busy task
 }
 
 // allTasksAreDone says if all tasks are done or not
@@ -226,5 +224,5 @@ unsigned short Job::getSlackOfFirstTaskToRun()
 			return taskList.at(i).calculateSlack();	// Return the slack of the first free task
 		}
 	}
-	return USHRT_MAX;						// Return USHRT_MAX when there are no free tasks
+	return USHRT_MAX;			// Return USHRT_MAX when there are no free tasks
 }
