@@ -10,16 +10,15 @@
 #include <iostream>
 #include <regex>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 JobShop::JobShop(std::string aFile) :
 		currentTime(0) {
-	// TODO Auto-generated constructor stub
 	makeStringToArrayList(aFile);	// Make string to a vectorList
-	makeJobList(allNumbersToList); // Makes a list of jobs
 }
 
 JobShop::~JobShop() {
-	// TODO Auto-generated destructor stub
 }
 
 //addJob add a job to the jobList
@@ -43,6 +42,7 @@ void JobShop::addTaskToJob(std::vector<int> aTasksListForJob,
 
 void JobShop::run() {
 	unsigned short stap = 0;
+//	unsigned short firstTimeSlackRun = true;
 	while (checkIfAllJobsAreFinished() == false) {
 
 		if (stap == 0) {
@@ -200,35 +200,34 @@ void JobShop::giveOutput() {
 void JobShop::makeStringToArrayList(std::string aFile) {
 	std::smatch m;
 	std::regex r("[0-9]+");
-	while (std::regex_search(aFile, m, r)) {
-		allNumbersToList.push_back(stoi(m.str(0)));
-		aFile = m.suffix().str();
 
+	std::string aFullLine;
+
+	std::ifstream file;
+	file.open(aFile);
+	if (!file.is_open()) {
+		std::cout << "File does not exist" << std::endl;
 	}
-}
+	while (std::getline(file, aFullLine)) {
+		lineInputList.push_back(aFullLine);
+	}
+	while (std::regex_search(lineInputList.at(0), m, r)) {
+		partList.push_back(stoi(m.str(0)));
+		lineInputList.at(0) = m.suffix().str();
+	}
 
-void JobShop::makeJobList(std::vector<int> jobs) {
-	nJobs = jobs.at(0); 		// first number is number of jobs
-	std::cout << "Number of jobs is " << nJobs << std::endl;
-	jobs.erase(jobs.begin()); 	// delete first value
-	nMachines = jobs.at(0); 	// our new first number is number of jobs
-	std::cout << "Number of machines is " << nMachines << std::endl;
-	jobs.erase(jobs.begin());	// delete first value
+	nJobs = partList.at(0);
+	partList.erase(partList.begin());
+	nMachines = partList.at(0);
+	partList.erase(partList.begin());
 
-	for (int i = 0; i < nJobs; ++i) {
-		makePartsJobList(nMachines, jobs);// Make parts list (duration, machine) for every job
+	for (unsigned long i = 1; i < lineInputList.size(); ++i) {
+		while (std::regex_search(lineInputList.at(i), m, r)) {
+			partList.push_back(stoi(m.str(0)));
+			lineInputList.at(i) = m.suffix().str();
+		}
 		addJob();
-		addTaskToJob(partList, i);
+		addTaskToJob(partList, i-1);
 		partList.clear();// clear the part list because you want to put a new list of parts in it
 	}
-
-}
-
-void JobShop::makePartsJobList(unsigned short nMachines,
-		std::vector<int> &parts) {
-	for (unsigned long i = 0; i < (nMachines * 2); ++i) {
-		partList.push_back(parts.at(0));// part one (duration) is pushed in the part list
-		parts.erase(parts.begin());	// now part one is added to the part list, can we delete it
-	}
-
 }

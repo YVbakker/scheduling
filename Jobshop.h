@@ -51,6 +51,7 @@ private:
 	std::vector<Job> jobList;			// A vector of all jobs
 	std::vector<int> allNumbersToList;// A vector of all numbers who later will be transferd to the list of parts
 	std::vector<int> partList;// A vector of the parts (machine and duration) who will be later added to the job list
+	std::vector<std::string> lineInputList;
 	unsigned short nMachines;			// Number of machines
 	unsigned short nJobs;				// Number of jobs
 	unsigned short currentTime;			// Current time
