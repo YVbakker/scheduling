@@ -5,7 +5,7 @@
  *      Author: jelle
  */
 
-#include "JobShop.h"
+#include "Jobshop.h"
 #include <iostream>
 #include <regex>
 #include <string>
