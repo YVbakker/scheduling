@@ -109,7 +109,6 @@ unsigned short Job::getFirstMachineToRun() {
 // Pre-condition =
 // Post-condition = The function returns the first busy machine of this job
 unsigned short Job::getBusyMachine() {
-
 	for (unsigned long i = 0; i < taskList.size(); i++) {
 		if (taskList.at(i).getStatus() == 1) {			// If task is busy
 			return taskList.at(i).getMachine();	// Returns the machine of the busy task

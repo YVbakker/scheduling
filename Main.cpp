@@ -13,11 +13,7 @@ int main(int argc, char **argv) {
 
 	std::cin >> aFile;
 
-	std::ifstream in(aFile);
-	std::string stringFile((std::istreambuf_iterator<char>(in)),
-			std::istreambuf_iterator<char>());
-
-	JobShop js1(stringFile);
+	JobShop js1(aFile);
 	js1.run();
 }
 
