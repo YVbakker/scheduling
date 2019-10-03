@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include <fstream>
+
 #include "JobShop.h"
 
 int main(int argc, char **argv) {

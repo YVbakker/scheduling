@@ -192,8 +192,8 @@ bool JobShop::checkIfAllJobsAreFinished() {
 // Post-condition = In the console the output is printed
 void JobShop::giveOutput() {
 	for (unsigned long i = 0; i < jobList.size(); ++i) {
-		std::cout << "Job " << i << " " << jobList.at(i).getStartTimeOfJob()
-				<< " " << jobList.at(i).getEndTimeOfJob() << std::endl;
+		std::cout << i << '\t' << jobList.at(i).getStartTimeOfJob()
+				<< '\t' << jobList.at(i).getEndTimeOfJob() << std::endl;
 	}
 }
 
