@@ -1,31 +1,23 @@
 /*
- * Main.cpp
+ * main.cpp
  *
- *  Created on: 24 Sep 2019
- *      Author: yvbakker
+ *  Created on: 30 sep. 2019
+ *      Author: jelle
  */
-
 #include <iostream>
-#include <string>
+#include "JobShop.h"
 #include <fstream>
-#include "Task.h"
-#include "Job.h"
-#include "Jobshop.h"
-#include "vector"
-
 
 int main(int argc, char **argv) {
+	std::string aFile;
 
-	if(argc == 2){
-		std::ifstream file;
-		file.open(argv[1]);
-		char c;
-		std::string data;
-		while(file >> c){data += c;};
-		JobShop js(data);
-		std::cout<<js.calc()<<std::endl;
-	}
-	else{
-		std::cout<<"(1 argument expected) Please input exacly one text file containing configuration."<<std::endl;
-	}
+	std::cin >> aFile;
+
+	std::ifstream in(aFile);
+	std::string stringFile((std::istreambuf_iterator<char>(in)),
+			std::istreambuf_iterator<char>());
+
+	JobShop js1(stringFile);
+	js1.run();
 }
+

@@ -1,29 +1,43 @@
 /*
  * Task.h
  *
- *  Created on: 24 Sep 2019
- *      Author: yvbakker
+ *  Created on: 30 sep. 2019
+ *      Author: jelle
  */
 
 #ifndef TASK_H_
 #define TASK_H_
 
-#include <iostream>
-
-class Task
-{
+class Task {
 public:
-	Task(int aDuration, int aMachine);
-	Task(const Task& aTask);
-	Task operator=(const Task& aTask);
+//	Constructors
+	Task(unsigned short aMachine, unsigned short aDuration);
 	virtual ~Task();
-	unsigned int getDuration();
-	unsigned int getMachine();
+
+//	getters
+	unsigned short getDuration() const;
+	unsigned short getEndTime() const;
+	unsigned short getMachine() const;
+	unsigned short getStartTime() const;
+	unsigned short getStatus() const;
+	unsigned short getEndTimeOfTask() const;
+
+//	setters
+	void setEndTime(unsigned short endTime);
+	void setStartTime(unsigned short startTime);
+	void setStatus(unsigned short status);
+	void setEndTimeOfTask(unsigned short endTimeOfTask);
+
+//	calculate
+	unsigned short calculateSlack();
+
 private:
-	unsigned int duration;
-	unsigned int machine;
+	unsigned short machine;			// Machine for this task
+	unsigned short duration;		// Duration for this task
+	unsigned short startTime;		// Minimum of start time
+	unsigned short endTime;			// Maximum of start time
+	unsigned short endTimeOfTask;	// Real time of ending this task
+	unsigned short status;	// Status of this job (0 = free, 1 = busy, 2 = done)
 };
-
-
 
 #endif /* TASK_H_ */

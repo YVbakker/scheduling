@@ -1,34 +1,54 @@
 /*
  * Job.h
  *
- *  Created on: 25 sep. 2019
+ *  Created on: 30 sep. 2019
  *      Author: jelle
  */
 
-#ifndef SCHEDULING_JOB_H_
-#define SCHEDULING_JOB_H_
+#ifndef JOB_H_
+#define JOB_H_
 
+#include <vector>
 #include "Task.h"
-#include <deque>
 
 class Job {
 public:
+//	constructors
 	Job();
-	Job(const Job& aJob); //copy constructor (required for use with Vector)
-	Job operator=(const Job& aJob); //operator= (required for use with Vector)
-	bool operator>(Job& aJob); //operator> (for easy sorting)
-	void addTask(unsigned char thread, unsigned char duration);
-	void deleteCompletedTask();
-	void setDeadline();
-	int size();
-	unsigned char getDuration();
-	Task getNextTask();
-	unsigned char slack(unsigned short cTime);
 	virtual ~Job();
+
+//	Getters
+	unsigned short getStatus() const;
+	const std::vector<Task>& getTaskList() const;
+	unsigned short getFirstMachineToRun();
+	unsigned short getBusyMachine();
+	unsigned short getDurationOfBusyTask(unsigned short aCurrentTime);
+	unsigned short getSlackOfFirstTaskToRun();
+	unsigned short getStartTimeOfJob();
+	unsigned short getEndTimeOfJob();
+
+//	Setters
+	void setStatus(unsigned short aStatus);
+	void setFirstFreeTaskToBusy(unsigned short aCurrentTime);
+
+//	Add
+	void addTask(unsigned short aMachine, unsigned short aDuration);
+	void addListOfTasks(std::vector<Task> aListOfTasks);
+
+//	calculate
+	unsigned short calculateTotalTimeOfJob(unsigned short aCurrentTime);
+
+//	Generate
+	void setsTheMinimumStartTimeOfTasks(unsigned short aCurrentTime);
+	void setsTheMaximumStartTimeOfTasks(unsigned short aCriticalPath);
+
+// 	checking
+	void setTasksWhoFinishedToDone(unsigned short aCurrentTime);
+	bool allTasksAreDone();
+
 private:
-	unsigned char deadline;
-	unsigned short remainingTime;
-	std::deque<Task> tasks; //use deque for better performance delete from front
+	std::vector<Task> taskList;	// a vector of tasks
+	unsigned short status;// the current status of this job (0 = free, 1 = busy, 2 = done)
 };
 
-#endif /* SCHEDULING_JOB_H_ */
+#endif /* JOB_H_ */

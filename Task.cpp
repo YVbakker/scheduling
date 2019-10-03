@@ -1,44 +1,68 @@
-
 /*
  * Task.cpp
  *
- *  Created on: 24 Sep 2019
- *      Author: yvbakker
+ *  Created on: 30 sep. 2019
+ *      Author: jelle
  */
 
 #include "Task.h"
-#include <iostream>
 
-Task::Task(int aDuration, int aMachine)
-:duration(aDuration), machine(aMachine)
-{
-	std::cout<<"Task added: "<<duration<<" "<<machine<<std::endl;
-}
-
-Task::~Task()
-{
+Task::Task(unsigned short aMachine, unsigned short aDuration) :
+		machine(aMachine), duration(aDuration), startTime(0), endTime(0), endTimeOfTask(
+				0), status(0) {
+	// TODO Auto-generated constructor stub
 
 }
 
-unsigned int Task::getDuration()
-{
+Task::~Task() {
+	// TODO Auto-generated destructor stub
+}
+
+// Getters
+unsigned short Task::getDuration() const {
 	return duration;
 }
 
-unsigned int Task::getMachine()
-{
+unsigned short Task::getEndTime() const {
+	return endTime;
+}
+
+unsigned short Task::getMachine() const {
 	return machine;
 }
 
-Task::Task(const Task &aTask)
-{
-	duration = aTask.duration;
-	machine = aTask.machine;
+unsigned short Task::getStartTime() const {
+	return startTime;
 }
 
-Task Task::operator =(const Task &aTask)
-{
-	duration = aTask.duration;
-	machine = aTask.machine;
-	return *this;
+unsigned short Task::getStatus() const {
+	return status;
+}
+
+unsigned short Task::getEndTimeOfTask() const {
+	return endTimeOfTask;
+}
+
+// Setters
+void Task::setEndTime(unsigned short endTime) {
+	this->endTime = endTime;
+}
+
+void Task::setStartTime(unsigned short startTime) {
+	this->startTime = startTime;
+}
+
+void Task::setStatus(unsigned short status) {
+	this->status = status;
+}
+
+void Task::setEndTimeOfTask(unsigned short endTimeOfTask) {
+	this->endTimeOfTask = endTimeOfTask;
+}
+
+// calculateSlack calculate the slack of this task
+// Pre-condition = there is a start and end time initialized
+// Post-condition = it returns the slack of this
+unsigned short Task::calculateSlack() {
+	return (endTime - startTime);
 }
