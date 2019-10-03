@@ -63,6 +63,7 @@ unsigned short Job::calculateTotalTimeOfJob(unsigned short aCurrentTime)
 				{	// Check if task is busy
 					totalTime += (t.getEndTimeOfTask() - aCurrentTime); // If task is busy pluss the total time with the time when the task ends minus the current time
 				}
+
 	}
 	return totalTime;
 }
