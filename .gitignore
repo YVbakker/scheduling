@@ -33,7 +33,7 @@
 /Debug/
 
 #eclipse
-/.settings/
+.settings/
 *.cproject
 *.project
 *.settings

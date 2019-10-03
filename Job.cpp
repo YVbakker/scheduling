@@ -115,7 +115,7 @@ void Job::setsTheMaximumStartTimeOfTasks(unsigned short aCriticalPath)
 
 // getFirstMachineToRun gives the first machine of this job who is free
 // Pre-condition =
-// Post-condition = The function returns the first machine which is free || The function returns a -1 which means there are no free tasks
+// Post-condition = The function returns the first machine which is free || The function returns a USHRT_MAX which means there are no free tasks
 unsigned short Job::getFirstMachineToRun()
 {
 	for (unsigned long i = 0; i < taskList.size(); i++)
@@ -125,7 +125,7 @@ unsigned short Job::getFirstMachineToRun()
 			return taskList.at(i).getMachine();	// Returns the machine of the current task
 		}
 	}
-	return -1;			// Returns a -1 when there are no free tasks of this job
+	return USHRT_MAX;			// Returns a USHRT_MAX when there are no free tasks of this job
 }
 
 // getBusyMachine gives the machine which is busy of this job
@@ -141,7 +141,7 @@ unsigned short Job::getBusyMachine()
 			return taskList.at(i).getMachine();	// Returns the machine of the busy task
 		}
 	}
-	return -1;		// Returns a -1 when there are no busy machines of this job
+	return USHRT_MAX;		// Returns USHRT_MAX when there are no busy machines of this job
 }
 
 // setFirstFreeTaskToBusy sets the first free machine to busy
@@ -195,7 +195,7 @@ unsigned short Job::getDurationOfBusyTask(unsigned short aCurrentTime)
 			return (taskList.at(i).getEndTimeOfTask() - aCurrentTime);// Return the time when the task will ends minus the current time
 		}
 	}
-	return -1;							// Return -1 when there is no busy task
+	return USHRT_MAX;							// Return USHRT_MAX when there is no busy task
 }
 
 // allTasksAreDone says if all tasks are done or not
@@ -215,7 +215,7 @@ bool Job::allTasksAreDone()
 
 // getSlackOfFirstJobToRun give the slack of the first task which is free
 // Pre-condition =
-// Post-condition = return the slack of the first free task || return a -1 when there are no free tasks
+// Post-condition = return the slack of the first free task || return a USHRT_MAX when there are no free tasks
 unsigned short Job::getSlackOfFirstTaskToRun()
 {
 	for (unsigned long i = 0; i < taskList.size(); ++i)
@@ -225,5 +225,5 @@ unsigned short Job::getSlackOfFirstTaskToRun()
 			return taskList.at(i).calculateSlack();	// Return the slack of the first free task
 		}
 	}
-	return -1;						// Return -1 when there are no free tasks
+	return USHRT_MAX;						// Return USHRT_MAX when there are no free tasks
 }
