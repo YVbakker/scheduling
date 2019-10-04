@@ -11,13 +11,15 @@
 Job::Job() :
 		status(0)
 {
-	// TODO Auto-generated constructor stub
+}
 
+Job::Job(const Job &other)
+:taskList(other.taskList), status(other.status)
+{
 }
 
 Job::~Job()
 {
-	// TODO Auto-generated destructor stub
 }
 
 // Getters
@@ -225,4 +227,12 @@ unsigned short Job::getSlackOfFirstTaskToRun()
 		}
 	}
 	return USHRT_MAX;			// Return USHRT_MAX when there are no free tasks
+}
+
+// operators
+Job& Job::operator =(const Job &other)
+{
+	taskList = other.taskList;
+	status = other.status;
+	return *this;
 }

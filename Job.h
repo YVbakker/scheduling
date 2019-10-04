@@ -15,6 +15,7 @@ class Job {
 public:
 //	constructors
 	Job();
+	Job(const Job& other);
 	virtual ~Job();
 
 //	Getters
@@ -33,7 +34,6 @@ public:
 
 //	Add
 	void addTask(unsigned short aMachine, unsigned short aDuration);
-	void addListOfTasks(std::vector<Task> aListOfTasks);
 
 //	calculate
 	unsigned short calculateTotalTimeOfJob(unsigned short aCurrentTime);
@@ -45,6 +45,9 @@ public:
 // 	checking
 	void setTasksWhoFinishedToDone(unsigned short aCurrentTime);
 	bool allTasksAreDone();
+
+//	operators
+	Job& operator=(const Job& other);
 
 private:
 	std::vector<Task> taskList;	// a vector of tasks

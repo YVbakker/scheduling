@@ -12,6 +12,7 @@ class Task {
 public:
 //	Constructors
 	Task(unsigned short aMachine, unsigned short aDuration);
+	Task(const Task& other);
 	virtual ~Task();
 
 //	getters
@@ -31,13 +32,16 @@ public:
 //	calculate
 	unsigned short calculateSlack();
 
+//	operators
+	Task& operator=(const Task& other);
+
 private:
 	unsigned short machine;			// Machine for this task
 	unsigned short duration;		// Duration for this task
 	unsigned short startTime;		// Minimum of start time
-	unsigned short endTime;			// Maximum of start time
-	unsigned short endTimeOfTask;	// Real time of ending this task
-	unsigned short status;	// Status of this job (0 = free, 1 = busy, 2 = done)
+	unsigned short maxStartTime;	// Maximum of start time
+	unsigned short endTime;			// Real time of ending this task
+	unsigned short status;			// Status of this job (0 = free, 1 = busy, 2 = done)
 };
 
 #endif /* TASK_H_ */
